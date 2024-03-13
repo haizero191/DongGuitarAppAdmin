@@ -1,0 +1,55 @@
+$color_darkmode: #ffffff;
+$color_darkmode_blur: #6a6b6f;
+$background_darkmode: #212226;
+$background_darkmode_highlight: #36373b;
+
+.Tags_M {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 20px;
+    position: relative;
+    .loading-bg {
+        position: absolute;
+        background-color: $background_darkmode;
+        border-radius: 10px;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+    }
+    .TM-left {
+        flex-grow: 40%;
+        flex-shrink: 1;
+        min-width: 40%;
+        border-radius: 4px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .Category-M {
+            flex-basis: 50%;
+            min-height: calc(50% - 10px);
+            flex-shrink: 1;
+            // background-color: $background_darkmode_highlight;
+            border-radius: 4px;
+        }
+
+        .Brand-M {
+            flex-basis: 50%;
+            min-height: calc(50% - 10px);
+            flex-shrink: 1;
+            border-radius: 4px;
+        }
+
+        
+    }
+
+    .TM-right {
+        flex-grow: 1;
+        background-color: $background_darkmode_highlight;
+        color: white;
+        text-transform: uppercase;
+        border-radius: 4px;
+        padding: 0px 20px;
+    }
+}

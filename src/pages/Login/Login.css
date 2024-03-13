@@ -1,0 +1,125 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html {
+  background-color: white;
+}
+
+.Login .underline-title {
+  padding-bottom: 5px;
+  position: relative;
+}
+
+.Login .login-container {
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 50px;
+  position: relative;
+}
+
+.Login .login-container .left-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 20px;
+}
+
+.Login .login-container .left-content h1 {
+  font-family: "Pacifico", cursive;
+  color: #e93225;
+  text-align: center;
+}
+
+.Login .login-container .left-content h2 {
+  font-family: "Pacifico", cursive;
+  color: #353434ac;
+  text-align: center;
+  letter-spacing: 6px;
+  font-size: 16px;
+}
+
+.Login .login-container .left-content .gif {
+  width: 300px;
+}
+
+.Login .login-container .left-content .gif img {
+  height: 100%;
+  width: 100%;
+}
+
+.Login .login-container .login-form {
+  width: 420px;
+  -webkit-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+          box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 44px 40px;
+}
+
+.Login .login-container .login-form h2 {
+  margin-bottom: 40px;
+}
+
+.Login .login-container .login-form .btn-login {
+  margin-top: 40px;
+}
+
+.Login .login-container .login-form .btn-login button {
+  width: 100%;
+  background-color: #D52B1E;
+  border: none;
+  padding: 16px 0px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  text-transform: uppercase;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.Login .login-container .login-form .btn-login button:hover {
+  -webkit-filter: brightness(90%);
+          filter: brightness(90%);
+}
+
+.Login .login-container .login-form .field-login {
+  margin-bottom: 20px;
+}
+
+.Login .login-container .login-form .field-login p {
+  font-weight: 500;
+}
+
+.Login .login-container .login-form .field-login input {
+  width: 100%;
+  height: 30px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.523);
+  background-color: transparent;
+}
+
+.Login .login-container .login-form .field-login input:focus {
+  outline: none;
+  border-color: #D52B1E;
+}
+/*# sourceMappingURL=Login.css.map */

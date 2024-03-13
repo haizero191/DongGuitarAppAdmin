@@ -1,0 +1,263 @@
+.PF_ProductAddForm {
+  color: black;
+  padding: 30px 0px;
+}
+
+.PF_ProductAddForm .P-pick-main {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  height: calc(100% - 90px);
+  margin-bottom: 40px;
+  max-height: 450px;
+  min-height: 450px;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-header {
+  width: 100%;
+  height: 40px;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+  -ms-flex-preferred-size: 40px;
+      flex-basis: 40px;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  min-height: 40px;
+  text-transform: initial;
+  background-color: #36373b;
+  border-bottom: 1px solid #ddd;
+  padding: 0px 20px;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-header .P-h-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 14px;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-header .p-h-name {
+  -ms-flex-preferred-size: 40%;
+      flex-basis: 40%;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-header .p-h-cate {
+  -ms-flex-preferred-size: 15%;
+      flex-basis: 15%;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-header .p-h-brand {
+  -ms-flex-preferred-size: 15%;
+      flex-basis: 15%;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-header .p-h-selling-price {
+  -ms-flex-preferred-size: 20%;
+      flex-basis: 20%;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-header .p-h-quantity {
+  -ms-flex-preferred-size: 10%;
+      flex-basis: 10%;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  padding: 30px 0px;
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-body::-webkit-scrollbar {
+  width: 6px;
+  display: none;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-body::-webkit-scrollbar-track {
+  background: #36373B;
+  border-radius: 15px;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-body::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 15px;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-body::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-body .P-list-inner {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 10px;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-body .P-item {
+  height: 60px;
+  min-height: 60px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 14px;
+  gap: 10px;
+  color: #36373b;
+  text-transform: capitalize;
+  cursor: pointer;
+  padding: 0px 20px;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-body .P-item.p-active {
+  background-color: #212226d6 !important;
+  color: white;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-body .P-item:hover {
+  background-color: #2122262c;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-body .P-item .p-name {
+  -ms-flex-preferred-size: 40%;
+      flex-basis: 40%;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-body .P-item .p-cate {
+  -ms-flex-preferred-size: 15%;
+      flex-basis: 15%;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-body .P-item .p-brand {
+  -ms-flex-preferred-size: 15%;
+      flex-basis: 15%;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-body .P-item .p-selling-price {
+  -ms-flex-preferred-size: 20%;
+      flex-basis: 20%;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.PF_ProductAddForm .P-pick-main .P-list .P-list-body .P-item .p-quantity {
+  -ms-flex-preferred-size: 10%;
+      flex-basis: 10%;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.PF_ProductAddForm .btn-final {
+  width: calc(100%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.PF_ProductAddForm .btn-final button {
+  -ms-flex-preferred-size: 30%;
+      flex-basis: 30%;
+  padding: 16px 0px;
+  border: none;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+.PF_ProductAddForm .btn-final button:nth-child(2) {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding: 16px 0px;
+  background-color: black;
+  border: 1px solid black;
+  font-weight: 500;
+}
+
+.PF_ProductAddForm .btn-final button:nth-child(1) {
+  background-color: white;
+  color: #cd0b0b !important;
+  border: 1px solid #cd0b0b;
+}
+/*# sourceMappingURL=PF_ProductAddForm.css.map */

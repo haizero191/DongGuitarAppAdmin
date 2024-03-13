@@ -1,0 +1,309 @@
+.P_CreateForm {
+    @import "../../../assets/scss/flex.scss";
+    position: relative;
+    h2 {
+        text-transform: uppercase;
+        margin-bottom: 30px;
+    }
+
+    .field-input {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        position: relative;
+
+        p {
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        input {
+            height: 30px;
+            outline: none;
+
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.555);
+        }
+        input:focus + .drop-menu {
+            display: flex;
+        }
+
+        .drop-menu:hover {
+            display: flex;
+        }
+
+        .btn-add {
+            position: absolute;
+            top: calc(50% - 8px);
+            right: 0px;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            display: none;
+            &:hover {
+                i {
+                    opacity: 1;
+                }
+            }
+            i {
+                opacity: 0.3;
+            }
+        }
+
+        .drop-menu {
+            position: absolute;
+            background-color: rgb(255, 255, 255);
+            width: 100%;
+            top: 110%;
+            z-index: 10000;
+            min-height: 100px;
+            box-shadow:
+                rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+                rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+            border: 1px solid #ddd;
+            display: none;
+            p {
+                font-weight: 500;
+                font-size: 14px;
+                text-transform: uppercase;
+                padding: 10px 16px;
+                margin: 0;
+                line-height: 16px;
+                font-weight: 600;
+                background-color: rgba(0, 0, 0, 0.651);
+                color: white;
+            }
+            ul {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                li {
+                    padding: 8px 16px;
+                    display: flex;
+                    align-items: center;
+                    font-size: 14px;
+                    cursor: pointer;
+                    user-select: none;
+                    &:hover {
+                        background-color: #ccccccb3;
+                    }
+                }
+            }
+        }
+    }
+
+    .form-container {
+        .image-container {
+            width: 100%;
+            height: 120px;
+            border: 1px dashed #aaa;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            .image-empty {
+                text-transform: uppercase;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                color: #ddd;
+                gap: 8px;
+            }
+            i {
+                font-size: 30px;
+                color: #ccc;
+            }
+
+            .image-load {
+                background-color: white;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 1000000;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+            }
+        }
+
+        .video-container {
+            width: 100%;
+            height: 100%;
+            border: 1px dashed #aaa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            .image-empty {
+                text-transform: uppercase;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                color: #ddd;
+                gap: 8px;
+                width: 100%;
+                padding: 0px 20px;
+                gap: 10px;
+                .video-input {
+                    width: 100%;
+                    border: 1px solid #ddd;
+                    padding: 0px 14px;
+                    border-radius: 20px;
+                    margin-bottom: 10px;
+                }
+            }
+            i {
+                font-size: 50px;
+                color: #ccc;
+            }
+        }
+        .btn-final {
+            width: calc(100% - 20px);
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            button {
+                flex-basis: 30%;
+                padding: 16px 0px;
+                border: none;
+                background-color: black;
+                color: white;
+                cursor: pointer;
+                border-radius: 3px;
+                position: relative;
+                overflow: hidden;
+            }
+            button:nth-child(2) {
+                flex-grow: 1;
+                padding: 16px 0px;
+                background-color: black;
+                border: 1px solid black;
+                font-weight: 500;
+            }
+
+            button:nth-child(1) {
+                background-color: white;
+                color: rgb(205, 11, 11) !important;
+                border: 1px solid rgb(205, 11, 11);
+            }
+        }
+    }
+
+    .miniform {
+        background-color: rgb(255, 255, 255);
+        width: 40%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: -44%;
+        z-index: 1;
+        box-shadow:
+            rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+            rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        padding: 30px 40px;
+        transition: 0.32s ease-in-out;
+        
+        & .miniform-close {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(255, 255, 255);
+            border-radius: 50%;
+            position: absolute;
+            right: -30px;
+            top: calc(50% - 25px);
+            box-shadow:
+                rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
+                rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
+                rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+            display: none;
+            cursor: pointer;
+            transform: scale(0);
+            transition: 0.3s ease-in-out;
+            &.show-miniform-close {
+                display: flex !important;
+                transform: scale(1);
+            }
+            i {
+                font-size: 26px;
+            }
+        }
+        &.miniform-active {
+            left: 0%;
+            transition-delay: 0.4s;
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+        }
+
+        .miniform-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            right: 0px;
+            height: 50px;
+            h2 {
+                margin: 0;
+            }
+        }
+    }
+
+    .specs-btn {
+        width: 140px;
+        height: 120px;
+        background-color: rgba(20, 20, 20, 0.803);
+        position: fixed;
+        top: calc(50% - 60px);
+        left: -95px;
+        border-top-left-radius: 20px;
+        transform: rotateZ(90deg);
+        border-top-right-radius: 20px;
+        display: flex;
+        align-items: flex-start;
+        padding: 10px 0px;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        animation-name: moveIn;
+        animation-duration: 0.3s;
+        animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        color: white;
+        mix-blend-mode: difference;
+        &:hover {
+            left: -60px;
+            transition-delay: 0s;
+        }
+        span {
+            position: relative;
+            font-weight: 500;
+        }
+
+        &.show-specs-btn {
+            left: -140px;
+        }
+    }
+}
+
+@keyframes moveIn {
+    from {
+        left: -140px;
+    }
+    to {
+        left: -95px;
+    }
+}

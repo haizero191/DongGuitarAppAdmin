@@ -1,0 +1,67 @@
+.Tags_M {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 20px;
+  position: relative;
+}
+
+.Tags_M .loading-bg {
+  position: absolute;
+  background-color: #212226;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
+.Tags_M .TM-left {
+  -webkit-box-flex: 40%;
+      -ms-flex-positive: 40%;
+          flex-grow: 40%;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  min-width: 40%;
+  border-radius: 4px;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 20px;
+}
+
+.Tags_M .TM-left .Category-M {
+  -ms-flex-preferred-size: 50%;
+      flex-basis: 50%;
+  min-height: calc(50% - 10px);
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  border-radius: 4px;
+}
+
+.Tags_M .TM-left .Brand-M {
+  -ms-flex-preferred-size: 50%;
+      flex-basis: 50%;
+  min-height: calc(50% - 10px);
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  border-radius: 4px;
+}
+
+.Tags_M .TM-right {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  background-color: #36373b;
+  color: white;
+  text-transform: uppercase;
+  border-radius: 4px;
+  padding: 0px 20px;
+}
+/*# sourceMappingURL=Tags_M.css.map */

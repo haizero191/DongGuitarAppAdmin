@@ -1,0 +1,62 @@
+$color_darkmode: #FFFFFF;
+$color_darkmode_blur: #6A6B6F;
+$background_darkmode: #212226;
+$background_darkmode_highlight: #2A2B2F;
+
+.Dashboard {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    .side {
+        width: 100px;
+        height: 100%;
+        background-color: $background_darkmode_highlight;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .side-nav-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;  
+            gap: 20px;
+            .side-nav-item {
+                width: 45px;
+                height: 45px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                cursor: pointer;
+
+                &.nav-item-active {
+                    background-color: #c4bcbc21!important;
+                    i {
+                        color: $color_darkmode!important;
+                    }
+                }
+                i {
+                    color: $color_darkmode_blur;
+                }
+                &:hover {
+                    background-color: #c4bcbc21;
+                    i {
+                        color: $color_darkmode!important;
+                    }
+                }
+
+               
+            }
+        }
+    }
+
+    .main {
+        flex-grow: 1;
+        background-color: $background_darkmode;
+        padding: 20px;
+        .main-container {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

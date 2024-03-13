@@ -1,0 +1,542 @@
+.P_CreateForm {
+  position: relative;
+}
+
+.P_CreateForm .flex-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 20px;
+  margin-right: -20px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: calc(100% + 10px);
+}
+
+.P_CreateForm .flex-row .flex-100 {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+  max-width: calc(100% - 20px);
+  min-width: calc(100% - 20px);
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+}
+
+.P_CreateForm .flex-row .flex-80 {
+  -ms-flex-preferred-size: 80%;
+      flex-basis: 80%;
+  max-width: calc(80% - 20px);
+  min-width: calc(80% - 20px);
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+}
+
+.P_CreateForm .flex-row .flex-70 {
+  -ms-flex-preferred-size: 70%;
+      flex-basis: 70%;
+  max-width: calc(70% - 20px);
+  min-width: calc(70% - 20px);
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+}
+
+.P_CreateForm .flex-row .flex-60 {
+  -ms-flex-preferred-size: 60%;
+      flex-basis: 60%;
+  max-width: calc(60%);
+  min-width: calc(60%);
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+}
+
+.P_CreateForm .flex-row .flex-50 {
+  -ms-flex-preferred-size: 50%;
+      flex-basis: 50%;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  max-width: calc(50% - 20px);
+  min-width: calc(50% - 20px);
+}
+
+.P_CreateForm .flex-row .flex-40 {
+  -ms-flex-preferred-size: 40%;
+      flex-basis: 40%;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  max-width: calc(40% - 20px);
+  min-width: calc(40% - 20px);
+}
+
+.P_CreateForm .flex-row .flex-30 {
+  -ms-flex-preferred-size: 30%;
+      flex-basis: 30%;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+  max-width: calc(30% - 20px);
+  min-width: calc(30% - 20px);
+}
+
+.P_CreateForm .flex-row .flex-20 {
+  -ms-flex-preferred-size: 20%;
+      flex-basis: 20%;
+  max-width: calc(20% - 20px);
+  min-width: calc(20% - 20px);
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+}
+
+.P_CreateForm .flex-row .flex-10 {
+  -ms-flex-preferred-size: 10%;
+      flex-basis: 10%;
+  max-width: calc(10% - 20px);
+  min-width: calc(10% - 20px);
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+}
+
+.P_CreateForm .flex-row .flex-25 {
+  -ms-flex-preferred-size: 25%;
+      flex-basis: 25%;
+  max-width: calc(25% - 20px);
+  min-width: calc(25% - 20px);
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+}
+
+.P_CreateForm .flex-row .flex-auto {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -ms-flex-negative: 1;
+      flex-shrink: 1;
+}
+
+.P_CreateForm h2 {
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+
+.P_CreateForm .field-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.P_CreateForm .field-input p {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.P_CreateForm .field-input input {
+  height: 30px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.555);
+}
+
+.P_CreateForm .field-input input:focus + .drop-menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.P_CreateForm .field-input .drop-menu:hover {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.P_CreateForm .field-input .btn-add {
+  position: absolute;
+  top: calc(50% - 8px);
+  right: 0px;
+  width: 26px;
+  height: 26px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  cursor: pointer;
+  display: none;
+}
+
+.P_CreateForm .field-input .btn-add:hover i {
+  opacity: 1;
+}
+
+.P_CreateForm .field-input .btn-add i {
+  opacity: 0.3;
+}
+
+.P_CreateForm .field-input .drop-menu {
+  position: absolute;
+  background-color: white;
+  width: 100%;
+  top: 110%;
+  z-index: 10000;
+  min-height: 100px;
+  -webkit-box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  border: 1px solid #ddd;
+  display: none;
+}
+
+.P_CreateForm .field-input .drop-menu p {
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  margin: 0;
+  line-height: 16px;
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.651);
+  color: white;
+}
+
+.P_CreateForm .field-input .drop-menu ul {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 4px;
+}
+
+.P_CreateForm .field-input .drop-menu ul li {
+  padding: 8px 16px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.P_CreateForm .field-input .drop-menu ul li:hover {
+  background-color: #ccccccb3;
+}
+
+.P_CreateForm .form-container .image-container {
+  width: 100%;
+  height: 120px;
+  border: 1px dashed #aaa;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+}
+
+.P_CreateForm .form-container .image-container .image-empty {
+  text-transform: uppercase;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #ddd;
+  gap: 8px;
+}
+
+.P_CreateForm .form-container .image-container i {
+  font-size: 30px;
+  color: #ccc;
+}
+
+.P_CreateForm .form-container .image-container .image-load {
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000000;
+}
+
+.P_CreateForm .form-container .image-container .image-load img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.P_CreateForm .form-container .video-container {
+  width: 100%;
+  height: 100%;
+  border: 1px dashed #aaa;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  cursor: pointer;
+}
+
+.P_CreateForm .form-container .video-container .image-empty {
+  text-transform: uppercase;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #ddd;
+  gap: 8px;
+  width: 100%;
+  padding: 0px 20px;
+  gap: 10px;
+}
+
+.P_CreateForm .form-container .video-container .image-empty .video-input {
+  width: 100%;
+  border: 1px solid #ddd;
+  padding: 0px 14px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.P_CreateForm .form-container .video-container i {
+  font-size: 50px;
+  color: #ccc;
+}
+
+.P_CreateForm .form-container .btn-final {
+  width: calc(100% - 20px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.P_CreateForm .form-container .btn-final button {
+  -ms-flex-preferred-size: 30%;
+      flex-basis: 30%;
+  padding: 16px 0px;
+  border: none;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+.P_CreateForm .form-container .btn-final button:nth-child(2) {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  padding: 16px 0px;
+  background-color: black;
+  border: 1px solid black;
+  font-weight: 500;
+}
+
+.P_CreateForm .form-container .btn-final button:nth-child(1) {
+  background-color: white;
+  color: #cd0b0b !important;
+  border: 1px solid #cd0b0b;
+}
+
+.P_CreateForm .miniform {
+  background-color: white;
+  width: 40%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: -44%;
+  z-index: 1;
+  -webkit-box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  padding: 30px 40px;
+  -webkit-transition: 0.32s ease-in-out;
+  transition: 0.32s ease-in-out;
+}
+
+.P_CreateForm .miniform .miniform-close {
+  width: 50px;
+  height: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  right: -30px;
+  top: calc(50% - 25px);
+  -webkit-box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+          box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  display: none;
+  cursor: pointer;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
+.P_CreateForm .miniform .miniform-close.show-miniform-close {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+.P_CreateForm .miniform .miniform-close i {
+  font-size: 26px;
+}
+
+.P_CreateForm .miniform.miniform-active {
+  left: 0%;
+  -webkit-transition-delay: 0.4s;
+          transition-delay: 0.4s;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+          box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.P_CreateForm .miniform .miniform-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+  right: 0px;
+  height: 50px;
+}
+
+.P_CreateForm .miniform .miniform-header h2 {
+  margin: 0;
+}
+
+.P_CreateForm .specs-btn {
+  width: 140px;
+  height: 120px;
+  background-color: rgba(20, 20, 20, 0.803);
+  position: fixed;
+  top: calc(50% - 60px);
+  left: -95px;
+  border-top-left-radius: 20px;
+  -webkit-transform: rotateZ(90deg);
+          transform: rotateZ(90deg);
+  border-top-right-radius: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding: 10px 0px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  cursor: pointer;
+  -webkit-transition: 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -webkit-animation-name: moveIn;
+          animation-name: moveIn;
+  -webkit-animation-duration: 0.3s;
+          animation-duration: 0.3s;
+  -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: white;
+  mix-blend-mode: difference;
+}
+
+.P_CreateForm .specs-btn:hover {
+  left: -60px;
+  -webkit-transition-delay: 0s;
+          transition-delay: 0s;
+}
+
+.P_CreateForm .specs-btn span {
+  position: relative;
+  font-weight: 500;
+}
+
+.P_CreateForm .specs-btn.show-specs-btn {
+  left: -140px;
+}
+
+@-webkit-keyframes moveIn {
+  from {
+    left: -140px;
+  }
+  to {
+    left: -95px;
+  }
+}
+
+@keyframes moveIn {
+  from {
+    left: -140px;
+  }
+  to {
+    left: -95px;
+  }
+}
+/*# sourceMappingURL=P_CreateForm.css.map */
