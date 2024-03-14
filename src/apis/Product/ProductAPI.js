@@ -56,6 +56,11 @@ class ProductAPI {
     });
     return result.data;
   }
+
+  async detail(id) {
+    var result = await axios.get(process.env.REACT_APP_API_URL + "/api/products/detail/" + id);
+    return result.data;
+  }
 }
 
 export default new ProductAPI();

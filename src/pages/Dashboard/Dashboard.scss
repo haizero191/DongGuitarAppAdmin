@@ -2,6 +2,8 @@ $color_darkmode: #FFFFFF;
 $color_darkmode_blur: #6A6B6F;
 $background_darkmode: #212226;
 $background_darkmode_highlight: #2A2B2F;
+@import "../../assets/scss/tabs_c.scss";
+@import "../../assets/scss/switch_c.scss";
 
 .Dashboard {
     width: 100%;

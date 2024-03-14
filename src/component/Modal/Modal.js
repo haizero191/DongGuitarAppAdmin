@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Modal.scss";
 
-const Modal = ({ active, action, children, size, title }) => {
+const Modal = ({ active, action, children, size = 'lg', title }) => {
   const componentRef = useRef(null);
   const modalRef = useRef(null);
   const BGRef = useRef(null);
@@ -40,7 +40,7 @@ const Modal = ({ active, action, children, size, title }) => {
 
       <div className="bg-blur" ref={BGRef}></div>
       <div
-        className={`modal-container ` + (size === "sm" ? "size-sm" : "size-lg")}
+        className={`modal-container ` + size}
         ref={modalRef}
       >
         <div className="modal-header">

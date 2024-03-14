@@ -89,8 +89,6 @@ const Featured_M = ({ onLoad, isLoading }) => {
 
   // Listen actions form
   const onActionForm = (data) => {
-
-
     if (data.status === "FORM_FINISHED") {
       setIsModalActive(false);
       console.log(data)

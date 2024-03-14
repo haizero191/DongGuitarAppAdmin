@@ -1,0 +1,39 @@
+.react-tabs {
+    height: 100%;
+}
+
+.react-tabs__tab-list {
+    padding: 18px 0px !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.react-tabs__tab-panel {
+    text-transform: initial;
+    position: relative !important;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.react-tabs__tab {
+    display: flex;
+    border-radius: 4px;
+    border: 1px solid white !important;
+    user-select: none;
+    font-size: 14px;
+    color: white;
+    &:hover {
+        background-color: rgba(255, 254, 254, 0.244);
+    }
+    &::after {
+        display: none;
+    }
+    &.react-tabs__tab--selected {
+        background-color: white;
+        border-radius: 4px;
+        &::after {
+            display: none;
+        }
+    }
+}
