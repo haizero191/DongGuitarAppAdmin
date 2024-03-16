@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./O_ConfirmForm.scss";
 import ProductAPI from "../../../apis/Product/ProductAPI";
 import OrderAPI from "../../../apis/Order/OrderAPI";
+import Loading from "../../../component/Loading/Loading";
+import moment from "moment";
+
 
 const O_ConfirmForm = ({ onFinish, active, data }) => {
   const [product, setProduct] = useState(null);
   const [status, setStatus] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
 
   const orderStatusList = [
     {
@@ -75,14 +79,26 @@ const O_ConfirmForm = ({ onFinish, active, data }) => {
   const onConfirm = async () => {
     var dataUpdate = data;
     dataUpdate.Status = status;
-    console.log(dataUpdate, status);
+    dataUpdate.IsReview = false;
+    setIsLoading(true)
     const Update_Order_Result = await OrderAPI.update(data._id, dataUpdate);
     if (Update_Order_Result.success) {
-      alert("Order updated !");
-      dataReset();
-      onFinish({
-        status: "FORM_FINISHED",
-      });
+      setTimeout(() => {
+        setIsLoading(false)
+        dataReset();
+        onFinish({
+          status: "FORM_FINISHED",
+        });
+      }, 500) 
+    }
+    else {
+      setTimeout(() => {
+        setIsLoading(false)
+        dataReset();
+        onFinish({
+          status: "FORM_FINISHED",
+        });
+      }, 500) 
     }
   };
 
@@ -97,6 +113,12 @@ const O_ConfirmForm = ({ onFinish, active, data }) => {
   const dataReset = () => {
     setStatus(null);
     setProduct(null);
+  };
+
+  // Format date time
+  const dateTimeFormatter = (date) => {
+    const formattedDate = moment(date).format("DD-MM-YYYY \n HH:mm:ss");
+    return formattedDate;
   };
 
   useEffect(() => {
@@ -136,8 +158,12 @@ const O_ConfirmForm = ({ onFinish, active, data }) => {
             <p>Mã đơn hàng</p>
             <p style={{ fontWeight: "700" }}>{data.Code}</p>
           </div>
-
           <div className="field-input flex-50">
+            <p></p>
+            <p style={{fontSize: "14px", opacity: 0.6}}>{dateTimeFormatter(data.CreatedAt)}</p>
+          </div>
+
+          <div className="field-input flex-50" style={{minHeight: "37px"}}>
             <p>Sản phẩm</p>
             <p>{product ? product.Name : "N/a"}</p>
           </div>
@@ -150,12 +176,6 @@ const O_ConfirmForm = ({ onFinish, active, data }) => {
             <p>{product ? product.Category.Name : "N/a"}</p>
           </div>
 
-          {/* <div className="field-input flex-50">
-            <p>Trạng thái đơn hàng</p>
-            <div className="badge badge-open">
-              <span>Chờ xác nhận</span>
-            </div>
-          </div> */}
           <div className="field-input flex-50">
             <p>Giá bán</p>
             <p style={{ color: "#d52b1e", fontSize: "24px" }}>
@@ -207,7 +227,9 @@ const O_ConfirmForm = ({ onFinish, active, data }) => {
 
         <div className="btn-actions">
           <button className="confirm-btn" onClick={onConfirm}>
-            Xác nhận
+            {
+              isLoading ? <Loading isLoading={isLoading}/> : <span>Xác nhận</span>
+            }            
           </button>
           <button className="cancel-btn" onClick={onCancel}>
             Hủy

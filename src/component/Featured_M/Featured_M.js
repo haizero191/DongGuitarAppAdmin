@@ -18,7 +18,6 @@ const Featured_M = ({ onLoad, isLoading }) => {
   const [featuredSelected, setFeaturedSelected] = useState(null);
   const [productList, setProductList] = useState([]);
 
-
   const onDelete = async () => {
     if (productList.length > 0) {
       alert("You must remove all products before you can take this action !");
@@ -50,18 +49,15 @@ const Featured_M = ({ onLoad, isLoading }) => {
 
   // Load data brand
   const loadData = async () => {
-
     const Get_Featured_Result = await FeatureAPI.get();
     if (Get_Featured_Result.success) {
       setFeaturedList(Get_Featured_Result.data);
       setFeaturedSelected(Get_Featured_Result.data[0]);
-
       onLoad({
         name: "product-feature",
         isLoaded: true,
       });
     } else {
-
     }
   };
 
@@ -91,14 +87,12 @@ const Featured_M = ({ onLoad, isLoading }) => {
   const onActionForm = (data) => {
     if (data.status === "FORM_FINISHED") {
       setIsModalActive(false);
-      console.log(data)
     }
     if (data.status === "FORM_CANCEL") {
       setIsModalActive(false);
-      console.log(data)
     }
 
-    loadData();
+    setFeaturedSelected({...featuredSelected, featuredSelected})
   };
 
   // Remove product from feature
@@ -112,7 +106,7 @@ const Featured_M = ({ onLoad, isLoading }) => {
         productId
       );
       if (Delete_ProductFeature_Result.success) {
-        loadData();
+        setFeaturedSelected({...featuredSelected, featuredSelected})
       } else {
         alert("Product remove had error !");
       }
@@ -128,7 +122,6 @@ const Featured_M = ({ onLoad, isLoading }) => {
       featureUpdate
     );
 
-    console.log("event changed", Update_Feature_Result);
     if (Update_Feature_Result.success && featureUpdate.IsActive) {
       event.target.checked = featureUpdate.IsActive;
     } else if (Update_Feature_Result.success && !featureUpdate.IsActive) {
