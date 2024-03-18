@@ -38,13 +38,6 @@ const Login = () => {
   return (
     <div className="Login">
       <div className="login-container">
-        <div className="left-content">
-          <h1>Have a nice day !</h1>
-          <div className="gif">
-            <img src="https://media0.giphy.com/media/xTiTnnnWvRXTeXx3wc/source.gif" />
-          </div>
-        </div>
-
         <div className="login-form">
           <h2 className="underline-title">LOGIN ADMIN</h2>
           <div className="field-login">

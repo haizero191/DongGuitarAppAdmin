@@ -5,10 +5,16 @@ $background_darkmode_highlight: #2A2B2F;
 @import "../../assets/scss/tabs_c.scss";
 @import "../../assets/scss/switch_c.scss";
 
+
+html {
+    background-color: white!important;
+}
+
 .Dashboard {
     width: 100%;
     height: 100%;
     display: flex;
+
     .side {
         width: 100px;
         height: 100%;

@@ -25,19 +25,6 @@ const Dashboard = () => {
     <div className="Dashboard">
       <div className="side">
         <div className="side-nav-list">
-          <div className="side-nav-item">
-            <i className="bi bi-house-gear-fill"></i>
-          </div>
-          <div
-            className={
-              "side-nav-item " +
-              (endpoint === "order-management" ? "nav-item-active" : "")
-            }
-
-            onClick={() => onNavigate("order-management")}
-          >
-            <i className="bi bi-pass-fill"></i>
-          </div>
           <div
             className={
               "side-nav-item " +
@@ -47,6 +34,19 @@ const Dashboard = () => {
           >
             <i className="bi bi-box-fill"></i>
           </div>
+          <div className="side-nav-item">
+            <i className="bi bi-house-gear-fill"></i>
+          </div>
+          <div
+            className={
+              "side-nav-item " +
+              (endpoint === "order-management" ? "nav-item-active" : "")
+            }
+            onClick={() => onNavigate("order-management")}
+          >
+            <i className="bi bi-pass-fill"></i>
+          </div>
+
           <div
             className={
               "side-nav-item " +

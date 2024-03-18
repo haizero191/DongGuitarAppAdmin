@@ -8,6 +8,7 @@ import Home_S from "../component/Home_S/Home_S";
 import Tags_M from "../component/Tags_M/Tags_M";
 import AuthAPI from "../apis/Auth/AuthAPI";
 import Order_M from "../component/Order_M/Order_M";
+import Home from "../pages/Home/Home";
 
 const PrivateRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -15,7 +16,6 @@ const PrivateRoute = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await AuthAPI.checkAuth();
-      console.log(response);
       if (response.success) {
         setIsAuthenticated(true);
       } else {
@@ -41,6 +41,10 @@ const AppRoutes = () => {
   return (
     <Routes>
       {/* Home Router */}
+      <Route path="/" element={<PrivateRoute />}>
+        <Route index element={<Home/>}/>
+      </Route>
+
       <Route element={<PrivateRoute />}>
         <Route path="dashboard" element={<Dashboard />}>
           <Route path="home-setting" element={<Home_S />} />
@@ -51,6 +55,7 @@ const AppRoutes = () => {
       </Route>
 
       <Route path="/login" element={<Login />} />
+     
     </Routes>
   );
 };
