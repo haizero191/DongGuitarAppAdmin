@@ -203,11 +203,11 @@
 
     .miniform {
         background-color: rgb(255, 255, 255);
-        width: 44%;
+        width: 40%;
         height: 100%;
         position: fixed;
         top: 0;
-        left: -44%;
+        left: -40%;
         z-index: 1;
         box-shadow:
             rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
@@ -263,8 +263,9 @@
     .specs-btn {
         width: 140px;
         height: 120px;
-        background-color: rgb(255, 255, 255);
+        background-color: #212226;
         position: fixed;
+        color: white;
         top: calc(50% - 60px);
         left: -95px;
         border-top-left-radius: 20px;

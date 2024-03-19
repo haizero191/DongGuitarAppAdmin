@@ -34,9 +34,6 @@ const Dashboard = () => {
           >
             <i className="bi bi-box-fill"></i>
           </div>
-          <div className="side-nav-item">
-            <i className="bi bi-house-gear-fill"></i>
-          </div>
           <div
             className={
               "side-nav-item " +
@@ -46,7 +43,6 @@ const Dashboard = () => {
           >
             <i className="bi bi-pass-fill"></i>
           </div>
-
           <div
             className={
               "side-nav-item " +
@@ -55,6 +51,9 @@ const Dashboard = () => {
             onClick={() => onNavigate("tags-management")}
           >
             <i className="bi bi-tag-fill"></i>
+          </div>
+          <div className="side-nav-item">
+            <i className="bi bi-house-gear-fill"></i>
           </div>
         </div>
       </div>

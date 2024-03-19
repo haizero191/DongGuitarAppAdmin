@@ -30,6 +30,7 @@ const F_CreateForm = ({ onFinish, active }) => {
   const onSave = async () => {
     if (feature.Name) {
       var response = await FeatureAPI.create(feature);
+      console.log(response)
       if (response.success) {
         onFinish({
           status: "FORM_FINISHED",

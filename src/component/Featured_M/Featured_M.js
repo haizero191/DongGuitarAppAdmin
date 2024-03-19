@@ -87,12 +87,13 @@ const Featured_M = ({ onLoad, isLoading }) => {
   const onActionForm = (data) => {
     if (data.status === "FORM_FINISHED") {
       setIsModalActive(false);
+      loadData();
     }
     if (data.status === "FORM_CANCEL") {
       setIsModalActive(false);
     }
 
-    setFeaturedSelected({...featuredSelected, featuredSelected})
+    setFeaturedSelected({ ...featuredSelected, featuredSelected });
   };
 
   // Remove product from feature
@@ -106,7 +107,7 @@ const Featured_M = ({ onLoad, isLoading }) => {
         productId
       );
       if (Delete_ProductFeature_Result.success) {
-        setFeaturedSelected({...featuredSelected, featuredSelected})
+        setFeaturedSelected({ ...featuredSelected, featuredSelected });
       } else {
         alert("Product remove had error !");
       }
@@ -128,6 +129,10 @@ const Featured_M = ({ onLoad, isLoading }) => {
       event.target.checked = featureUpdate.IsActive;
     }
   };
+
+  const goFeatureUp = () => {
+    alert("Upppp")
+  }
 
   useEffect(() => {
     loadData();
@@ -166,9 +171,13 @@ const Featured_M = ({ onLoad, isLoading }) => {
         <div className="tabs-container">
           <Tabs onSelect={(index) => handleTabChange(index)}>
             <TabList>
-              {featuredList.map((featured) => {
+              {featuredList.map((featured, index) => {
                 return (
-                  <Tab key={"tab-feature" + featured._id}>{featured.Name}</Tab>
+                  <Tab key={"tab-feature" + featured._id} style={{order: index}}>
+                    {/* <i class="bi bi-caret-left-fill" onClick={goFeatureUp}></i> */}
+                    <span>{featured.Name}</span>
+                    {/* <i class="bi bi-caret-right-fill"></i> */}
+                  </Tab>
                 );
               })}
             </TabList>

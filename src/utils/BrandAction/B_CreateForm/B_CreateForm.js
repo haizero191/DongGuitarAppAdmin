@@ -18,8 +18,10 @@ const B_CreateForm = ({ onFinish, active }) => {
     dataReset();
   };
   const onSave = async () => {
+ 
     if (brand.Name) {
       var response = await BrandAPI.create(brand);
+      console.log(response)
       if (response.success) {
         onFinish({
           status: "FORM_FINISHED",

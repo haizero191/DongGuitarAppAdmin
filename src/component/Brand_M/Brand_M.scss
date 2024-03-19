@@ -154,6 +154,7 @@ $background_darkmode_highlight: #36373b;
                     .B-name {
                         flex-basis: 70%;
                         flex-shrink: 1;
+                        text-transform: capitalize;
                     }
                     .B-pAmount {
                         flex-basis: 20%;

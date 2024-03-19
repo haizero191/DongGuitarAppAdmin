@@ -300,7 +300,7 @@ const Order_M = ({ onLoad }) => {
                                       {order.Code}
                                     </div>
                                     <div className="order-product">
-                                      {order.Product.Name}
+                                      {order.ProductName ? order.ProductName : "N/a"}
                                     </div>
                                     <div className="order-customer">
                                       {order.Fullname}

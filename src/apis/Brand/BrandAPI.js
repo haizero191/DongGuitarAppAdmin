@@ -10,8 +10,11 @@ class BrandAPI {
   async create(data) {
     var result = await axios({
       method: "post",
-      url: "http://localhost:4000/api/brands/create",
-      headers: {},
+      url: process.env.REACT_APP_API_URL + "/api/brands/create",
+      headers: {
+        "Authorization": localStorage.getItem("DONGGUITAR_JWT_ACCESS_TOKEN") ? 'Bearer ' + localStorage.getItem("DONGGUITAR_JWT_ACCESS_TOKEN") : null,
+        "X-Refresh-Token": localStorage.getItem("DONGGUITAR_JWT_REFRESH_TOKEN") ? localStorage.getItem("DONGGUITAR_JWT_REFRESH_TOKEN") : null
+      },
       data: data,
     });
 
@@ -21,7 +24,7 @@ class BrandAPI {
   async delete(lsId) {
     var result = await axios({
       method: "delete",
-      url: "http://localhost:4000/api/brands/delete",
+      url: process.env.REACT_APP_API_URL + "/api/brands/delete",
       headers: {
         "Authorization": localStorage.getItem("DONGGUITAR_JWT_ACCESS_TOKEN") ? 'Bearer ' + localStorage.getItem("DONGGUITAR_JWT_ACCESS_TOKEN") : null,
         "X-Refresh-Token": localStorage.getItem("DONGGUITAR_JWT_REFRESH_TOKEN") ? localStorage.getItem("DONGGUITAR_JWT_REFRESH_TOKEN") : null
@@ -36,8 +39,11 @@ class BrandAPI {
   async update(id, data) {
     var result = await axios({
       method: "put",
-      url: `http://localhost:4000/api/brands/update/${id}`,
-      headers: {},
+      url: process.env.REACT_APP_API_URL + `/api/brands/update/${id}`,
+      headers: {
+        "Authorization": localStorage.getItem("DONGGUITAR_JWT_ACCESS_TOKEN") ? 'Bearer ' + localStorage.getItem("DONGGUITAR_JWT_ACCESS_TOKEN") : null,
+        "X-Refresh-Token": localStorage.getItem("DONGGUITAR_JWT_REFRESH_TOKEN") ? localStorage.getItem("DONGGUITAR_JWT_REFRESH_TOKEN") : null
+      },
       data: data,
     });
     return result.data;

@@ -63,16 +63,16 @@ const O_ConfirmForm = ({ onFinish, active, data }) => {
   };
 
   const initData = () => {
-    const getProductWithId = async () => {
-      var Detail_Product_With_Id_Result = await ProductAPI.detail(
-        data.Product._id
-      );
-      console.log(Detail_Product_With_Id_Result);
-      if (Detail_Product_With_Id_Result.success)
-        setProduct(Detail_Product_With_Id_Result.data);
-    };
+    // const getProductWithId = async () => {
+    //   var Detail_Product_With_Id_Result = await ProductAPI.detail(
+    //     data.Product._id
+    //   );
+    //   if (Detail_Product_With_Id_Result.success)
+      
+    // };
+    setProduct(data);
     setStatus(data.Status);
-    getProductWithId();
+    // getProductWithId();
   };
 
   // Xử lý xác nhận
@@ -165,15 +165,15 @@ const O_ConfirmForm = ({ onFinish, active, data }) => {
 
           <div className="field-input flex-50" style={{minHeight: "37px"}}>
             <p>Sản phẩm</p>
-            <p>{product ? product.Name : "N/a"}</p>
+            <p>{product && product.ProductName ? product.ProductName : "N/a"}</p>
           </div>
           <div className="field-input flex-50">
             <p>Nhãn hàng</p>
-            <p>{product ? product.Brand.Name : "N/a"}</p>
+            <p>{product && product.BrandName ? product.BrandName : "N/a"}</p>
           </div>
           <div className="field-input flex-50">
             <p>Danh mục</p>
-            <p>{product ? product.Category.Name : "N/a"}</p>
+            <p>{product && product.CategoryName ? product.CategoryName : "N/a"}</p>
           </div>
 
           <div className="field-input flex-50">
