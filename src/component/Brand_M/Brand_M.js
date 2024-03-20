@@ -22,7 +22,7 @@ const Brand_M = ({ onLoad, isLoading }) => {
         window.confirm("Delete all brand had selected ! Are you sure ?") == true
       ) {
         var Delete_Brand_Result = await BrandAPI.delete(brandSelected);
-        console.log(Delete_Brand_Result)
+        
         if (Delete_Brand_Result.success) {
           alert("Brands had deleted !");
           loadData();
@@ -83,7 +83,6 @@ const Brand_M = ({ onLoad, isLoading }) => {
           return getAmountProductOfBrand(brand);
         })
       );
-
       onLoad({
         name: "brand",
         isLoaded: true,

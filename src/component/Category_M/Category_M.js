@@ -7,6 +7,7 @@ import CategoryAPI from "../../apis/Category/CategoryAPI";
 import { useEffect } from "react";
 import C_EditForm from "../../utils/CategoryAction/C_EditForm/C_EditForm";
 import ProductAPI from "../../apis/Product/ProductAPI";
+import SubCategoryAPI from "../../apis/SubCategoryAPI/SubCategoryAPI";
 
 const Category_M = ({ onLoad, isLoading }) => {
   const [isModalActive, setIsModalActive] = useState(false);
@@ -16,6 +17,8 @@ const Category_M = ({ onLoad, isLoading }) => {
   const [cateSelected, setCateSelected] = useState([]);
   const [amountProductList, setAmountProductList] = useState([]);
 
+
+  // Handle actions for category management
   const onDelete = async () => {
     if (cateSelected.length === 0)
       alert("Please select category to delete !!!");
@@ -24,11 +27,20 @@ const Category_M = ({ onLoad, isLoading }) => {
         window.confirm("Delete all category had selected ! Are you sure ?") ==
         true
       ) {
-        var response = await CategoryAPI.delete(cateSelected);
-        if (response.success) {
-          alert("Categories had deleted !");
-          loadData();
+
+        var cateSelectedDelete = categoryList.filter(cate => cate._id === cateSelected[0])
+        var subCateIds = cateSelectedDelete[0].SubCategory.map(sc => sc._id)
+        var Delete_All_SubCategory_Result = await SubCategoryAPI.delete(subCateIds)
+
+        
+        if(Delete_All_SubCategory_Result.success) {
+          var response = await CategoryAPI.delete(cateSelected);
+          if (response.success) {
+            alert("Categories had deleted !");
+            loadData();
+          }
         }
+      
       } else {
       }
     }
@@ -53,12 +65,14 @@ const Category_M = ({ onLoad, isLoading }) => {
     switch (data.status) {
       case "close":
         setIsModalActive(false);
+        loadData();
         break;
       default:
         break;
     }
   };
 
+  // Get amount product of category
   const getAmountProductOfCategory = async (category) => {
     const pAmount = await ProductAPI.getAmount("category", category._id);
     return pAmount;
@@ -88,9 +102,11 @@ const Category_M = ({ onLoad, isLoading }) => {
     loadData();
     if (data.status === "FORM_FINISHED") {
       setIsModalActive(false);
+      loadData();
     }
     if (data.status === "FORM_CANCEL") {
       setIsModalActive(false);
+      loadData();
     }
   };
 
@@ -179,7 +195,7 @@ const Category_M = ({ onLoad, isLoading }) => {
         <Modal
           active={isModalActive}
           action={handleModalAction}
-          size="sm"
+          size="nor"
           title={modalTitle}
         >
           {modalAction === "C_Create" ? (

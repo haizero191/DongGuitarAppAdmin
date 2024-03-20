@@ -34,7 +34,7 @@ class ProductSpecsAPI {
   async update(id, dataUpdate) {
     var result = await axios({
       method: "put",
-      url: `http://localhost:4000/api/product_specs/update/${id}`,
+      url: process.env.REACT_APP_API_URL + `/api/product_specs/update/${id}`,
       headers: {
         "Authorization": localStorage.getItem("DONGGUITAR_JWT_ACCESS_TOKEN") ? 'Bearer ' + localStorage.getItem("DONGGUITAR_JWT_ACCESS_TOKEN") : null,
         "X-Refresh-Token": localStorage.getItem("DONGGUITAR_JWT_REFRESH_TOKEN") ? localStorage.getItem("DONGGUITAR_JWT_REFRESH_TOKEN") : null

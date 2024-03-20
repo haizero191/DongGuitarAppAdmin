@@ -15,6 +15,7 @@ const P_CreateForm = ({ onFinish, active }) => {
   const [product, setProduct] = useState({});
   const [brandList, setBrandList] = useState([]);
   const [cateList, setCateList] = useState([]);
+  const [subCateList, setSubCateList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [editorContent, setEditorContent] = useState("");
   const [productFiles, setProductFiles] = useState([null, null, null, null]);
@@ -84,9 +85,6 @@ const P_CreateForm = ({ onFinish, active }) => {
     if (dataChecker(newProduct)) {
       //-------------------------- HANDLE CREATE A NEW PRODUCT -------------------------------
 
-
-
-
       try {
         setIsLoading(true);
         var [C_Product_Result, C_Image_Result, C_ProductSpecs_Result] = await Promise.all([
@@ -103,6 +101,8 @@ const P_CreateForm = ({ onFinish, active }) => {
               return result;
             })
           );
+
+
           console.log("Image Uploading....");
           // Xử lí kết quả tạo document Image ---------------------------------
           var productCreated = C_Product_Result.data;
@@ -194,10 +194,29 @@ const P_CreateForm = ({ onFinish, active }) => {
     });
   };
 
+  // handle brand selected
+  const onSubCateSelected = (event) => {
+    var subCateEL = document.getElementsByName("SubCategory");
+    subCateEL[0].value = event.target.getAttribute("data-name");
+    setProduct({
+      ...product,
+      ["SubCategory"]: event.target.getAttribute("data-value"),
+    });
+  };
+
   // handle category selected
-  const onCateSelected = (event) => {
+  const onCateSelected = async (event) => {
     var cateEL = document.getElementsByName("Category");
     cateEL[0].value = event.target.getAttribute("data-name");
+
+
+    var Get_Category_Result = await CategoryAPI.detail(event.target.getAttribute("data-value"))
+    console.log(Get_Category_Result)
+    if(Get_Category_Result.success) {
+      setSubCateList(Get_Category_Result.data.SubCategory)
+    }
+
+
     setProduct({
       ...product,
       ["Category"]: event.target.getAttribute("data-value"),
@@ -352,7 +371,7 @@ const P_CreateForm = ({ onFinish, active }) => {
               </div>
             </div>
             <div className="flex-row">
-              <div className="field-input flex-40">
+              <div className="field-input flex-50">
                 <p>Category</p>
                 <input type="text" name="Category" readOnly></input>
                 <div className="drop-menu">
@@ -373,7 +392,31 @@ const P_CreateForm = ({ onFinish, active }) => {
                   </ul>
                 </div>
               </div>
-              <div className="field-input flex-20">
+              <div className="field-input flex-50">
+                <p>Sub-Category</p>
+                <input type="text" name="SubCategory" readOnly></input>
+                <div className="drop-menu">
+                  <p>Category list</p>
+                  <ul>
+                    {subCateList && subCateList.map((subCate) => {
+                      return (
+                        <li
+                          key={"np-create-subcategory-selected" + subCate._id}
+                          onClick={onSubCateSelected}
+                          data-name={subCate.Name}
+                          data-value={subCate._id}
+                        >
+                          {subCate.Name}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex-row">
+            <div className="field-input flex-40">
                 <p>Purchase price</p>
                 <input
                   type="number"
@@ -381,7 +424,7 @@ const P_CreateForm = ({ onFinish, active }) => {
                   onChange={handleChange}
                 ></input>
               </div>
-              <div className="field-input flex-20">
+              <div className="field-input flex-40">
                 <p>Selling price</p>
                 <input
                   type="number"

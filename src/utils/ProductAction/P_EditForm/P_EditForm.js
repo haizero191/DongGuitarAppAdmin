@@ -15,6 +15,7 @@ const P_EditForm = ({ onFinish, active, data }) => {
   const [productFiles, setProductFiles] = useState([null, null, null, null]);
   const [brandList, setBrandList] = useState([]);
   const [cateList, setCateList] = useState([]);
+  const [subCateList, setSubCateList] = useState([]);
   const { quill, quillRef } = useQuill();
   const [editorContent, setEditorContent] = useState("");
   const [product, setProduct] = useState({});
@@ -105,14 +106,42 @@ const P_EditForm = ({ onFinish, active, data }) => {
     });
   };
 
-  // handle category selected
-  const onCateSelected = (event) => {
-    var cateEL = document.getElementsByName("Category");
-    cateEL[0].value = event.target.getAttribute("data-name");
+  // handle brand selected
+  const onSubCateSelected = (event) => {
+    var subCateEL = document.getElementsByName("SubCategory");
+    subCateEL[0].value = event.target.getAttribute("data-name");
     setProduct({
       ...product,
-      ["Category"]: event.target.getAttribute("data-value"),
+      ["SubCategory"]: event.target.getAttribute("data-value"),
     });
+  };
+
+  // handle category selected
+  const onCateSelected = async (event) => {
+    var cateEL = document.getElementsByName("Category");
+    cateEL[0].value = event.target.getAttribute("data-name");
+
+    var Get_Category_Result = await CategoryAPI.detail(
+      event.target.getAttribute("data-value")
+    );
+    console.log(Get_Category_Result);
+    if (Get_Category_Result.success) {
+      setSubCateList(Get_Category_Result.data.SubCategory);
+      var dataProductUpdate = product;
+
+      if (!Get_Category_Result.data.SubCategory) {
+        dataProductUpdate.SubCategory = null;
+        setProduct(dataProductUpdate);
+      } else if (Get_Category_Result.data.SubCategory.length === 0) {
+        dataProductUpdate.SubCategory = null;
+        setProduct(dataProductUpdate);
+      }
+
+      setProduct({
+        ...dataProductUpdate,
+        ["Category"]: event.target.getAttribute("data-value"),
+      });
+    }
   };
 
   // reset form create
@@ -148,7 +177,7 @@ const P_EditForm = ({ onFinish, active, data }) => {
         if (Create_Image_Result.success) return Create_Image_Result.data;
       }
     } else if (!file && fileSaved) {
-      return fileSaved
+      return fileSaved;
     }
   };
 
@@ -165,18 +194,21 @@ const P_EditForm = ({ onFinish, active, data }) => {
       })
     );
 
-    Update_Product_Image_Result = Update_Product_Image_Result.filter((Image) => {
-      return Image !== undefined 
-    });
+    Update_Product_Image_Result = Update_Product_Image_Result.filter(
+      (Image) => {
+        return Image !== undefined;
+      }
+    );
 
     updateProduct.Images = Update_Product_Image_Result;
-    console.log(Update_Product_Image_Result)
 
     // Update thông tin sản phẩm
     var [U_Product_Result, U_Product_specs_Result] = await Promise.all([
       ProductAPI.update(updateProduct._id, updateProduct),
       ProductSpecsAPI.update(productSpecs._id, productSpecs),
     ]);
+
+    console.log(U_Product_Result.success && U_Product_specs_Result.success);
 
     // Kết thúc xử lí
     if (U_Product_Result.success && U_Product_specs_Result.success) {
@@ -350,7 +382,7 @@ const P_EditForm = ({ onFinish, active, data }) => {
               </div>
             </div>
             <div className="flex-row">
-              <div className="field-input flex-40">
+              <div className="field-input flex-50">
                 <p>Category</p>
                 <input
                   type="text"
@@ -376,7 +408,37 @@ const P_EditForm = ({ onFinish, active, data }) => {
                   </ul>
                 </div>
               </div>
-              <div className="field-input flex-20">
+
+              <div className="field-input flex-50">
+                <p>Sub-Category</p>
+                <input
+                  type="text"
+                  name="SubCategory"
+                  value={product.SubCategory ? product.SubCategory.Name : ""}
+                  readOnly
+                ></input>
+                <div className="drop-menu">
+                  <p>Category list</p>
+                  <ul>
+                    {subCateList &&
+                      subCateList.map((subCate) => {
+                        return (
+                          <li
+                            key={"np-create-subcategory-selected" + subCate._id}
+                            onClick={onSubCateSelected}
+                            data-name={subCate.Name}
+                            data-value={subCate._id}
+                          >
+                            {subCate.Name}
+                          </li>
+                        );
+                      })}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div className="flex-row">
+              <div className="field-input flex-40">
                 <p>Purchase price</p>
                 <input
                   type="number"
@@ -385,7 +447,7 @@ const P_EditForm = ({ onFinish, active, data }) => {
                   value={product.PurchasePrice}
                 ></input>
               </div>
-              <div className="field-input flex-20">
+              <div className="field-input flex-40">
                 <p>Selling price</p>
                 <input
                   type="number"
@@ -420,9 +482,11 @@ const P_EditForm = ({ onFinish, active, data }) => {
           <div className="btn-final">
             <button onClick={onCancel}>Cancel</button>
             <button onClick={onSave}>
-              {
-                isLoading ? <Loading isLoading={isLoading}></Loading> : <span>Update</span>
-              }
+              {isLoading ? (
+                <Loading isLoading={isLoading}></Loading>
+              ) : (
+                <span>Update</span>
+              )}
             </button>
           </div>
         </div>
