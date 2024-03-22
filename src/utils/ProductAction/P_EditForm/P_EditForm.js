@@ -10,6 +10,7 @@ import ImageAPI from "../../../apis/Image/ImageAPI";
 import { useEffect } from "react";
 import ProductSpecsAPI from "../../../apis/Product_specs/ProductSpecsAPI";
 import DriverAPI from "../../../apis/Driver/DriverAPI";
+import SpecsAPI from "../../../apis/Specs/SpecsAPI";
 
 const P_EditForm = ({ onFinish, active, data }) => {
   const [productFiles, setProductFiles] = useState([null, null, null, null]);
@@ -19,10 +20,14 @@ const P_EditForm = ({ onFinish, active, data }) => {
   const { quill, quillRef } = useQuill();
   const [editorContent, setEditorContent] = useState("");
   const [product, setProduct] = useState({});
-  const [imageSaved, setImageSaved] = useState([]);
+
   const [isMiniFormActive, setIsMiniFormActive] = useState(false);
-  const [productSpecs, setProductSpecs] = useState({});
+  const [productSpecs, setProductSpecs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [newSpecs, setNewSpecs] = useState({
+    Name: "",
+    Description: "",
+  });
 
   useEffect(() => {
     if (quill) {
@@ -41,12 +46,15 @@ const P_EditForm = ({ onFinish, active, data }) => {
   useEffect(() => {
     if (!active) {
       dataReset();
+      const closeMiniFormEl = document.querySelector(".miniform-close");
+      if (closeMiniFormEl.classList.contains("show-miniform-close")) {
+        closeMiniFormEl.click();
+      }
     } else {
       setProduct(data);
-      setImageSaved(data.Images);
-      setProductSpecs(data.Product_specs);
       getBrands();
       getCategories();
+      getProductSpecs(data._id);
     }
   }, [active]);
 
@@ -82,6 +90,19 @@ const P_EditForm = ({ onFinish, active, data }) => {
   // handle input change
   const handleChange = (event) => {
     setProduct({ ...product, [event.target.name]: event.target.value });
+  };
+
+  // handle create Specs change
+  const handleSpecsChange = (event) => {
+    setNewSpecs({ ...newSpecs, [event.target.name]: event.target.value });
+  };
+
+  // Get Product Specs
+  const getProductSpecs = async (productId) => {
+    const Get_ProductSpecs_Result = await ProductSpecsAPI.get(productId);
+    if (Get_ProductSpecs_Result.success) {
+      setProductSpecs(Get_ProductSpecs_Result.data);
+    }
   };
 
   // get all brand for product select
@@ -203,15 +224,14 @@ const P_EditForm = ({ onFinish, active, data }) => {
     updateProduct.Images = Update_Product_Image_Result;
 
     // Update thông tin sản phẩm
-    var [U_Product_Result, U_Product_specs_Result] = await Promise.all([
+    var [U_Product_Result] = await Promise.all([
       ProductAPI.update(updateProduct._id, updateProduct),
-      ProductSpecsAPI.update(productSpecs._id, productSpecs),
     ]);
 
-    console.log(U_Product_Result.success && U_Product_specs_Result.success);
+    console.log(U_Product_Result.success);
 
     // Kết thúc xử lí
-    if (U_Product_Result.success && U_Product_specs_Result.success) {
+    if (U_Product_Result.success) {
       onFinish({
         status: "FORM_FINISHED",
       });
@@ -220,6 +240,39 @@ const P_EditForm = ({ onFinish, active, data }) => {
     } else {
       alert("Update failed");
       setIsLoading(false);
+    }
+  };
+
+  // Handle add new Product Specs
+  const onAddProductSpecs = async () => {
+    var Create_ProductSpecs_Result = await ProductSpecsAPI.create({
+      Product: product._id,
+      Name: newSpecs.Name,
+      Description: newSpecs.Description,
+    });
+
+    if (Create_ProductSpecs_Result.success) {
+      getProductSpecs(product._id);
+      var inputNameEl = document.querySelector(
+        ".miniform-container-left .specs-name input"
+      );
+      var inputDescEl = document.querySelector(
+        ".miniform-container-left .specs-desc input"
+      );
+      inputNameEl.value = "";
+      inputDescEl.value = "";
+    }
+  };
+
+  // Handle delete Products Specs
+  const onDeleteProductSpecs = async (productSpecs, event) => {
+
+    console.log(productSpecs._id)
+
+    const Delete_ProductSpecs_Result = await ProductSpecsAPI.delete([productSpecs._id]);
+    console.log(Delete_ProductSpecs_Result)
+    if (Delete_ProductSpecs_Result.success) {
+      getProductSpecs(product._id);
     }
   };
 
@@ -261,14 +314,6 @@ const P_EditForm = ({ onFinish, active, data }) => {
   // close mini form
   const closeMiniForm = () => {
     setIsMiniFormActive(false);
-  };
-
-  // Handle product specs change
-  const handleAdvancedChange = (event) => {
-    setProductSpecs({
-      ...productSpecs,
-      [event.target.name]: event.target.value,
-    });
   };
 
   return (
@@ -492,10 +537,8 @@ const P_EditForm = ({ onFinish, active, data }) => {
         </div>
       </div>
 
-      {!active ? (
-        <></>
-      ) : (
-        <div>
+      <div className="miniform-container-left">
+        {active ? (
           <div
             className={
               isMiniFormActive ? "specs-btn show-specs-btn" : "specs-btn"
@@ -504,104 +547,71 @@ const P_EditForm = ({ onFinish, active, data }) => {
           >
             <span>Advanced</span>
           </div>
+        ) : (
+          <></>
+        )}
+
+        <div
+          className={isMiniFormActive ? "miniform miniform-active" : "miniform"}
+        >
+          <div className="miniform-header">
+            <h2>Key Features </h2>
+          </div>
+
           <div
             className={
-              isMiniFormActive ? "miniform miniform-active" : "miniform"
+              isMiniFormActive
+                ? "miniform-close show-miniform-close"
+                : "miniform-close"
             }
+            onClick={closeMiniForm}
           >
-            <div className="miniform-header">
-              <h2>Feature </h2>
+            <i class="bi bi-arrow-left-short"></i>
+          </div>
+
+          <div className="miniform-content">
+            {/* Specs Create HTML */}
+            <div className="miniform-create">
+              <div className="miniform-flex-row">
+                <div className="field-input specs-name">
+                  <input
+                    type="text"
+                    name="Name"
+                    placeholder="Name"
+                    onChange={handleSpecsChange}
+                  ></input>
+                </div>
+                <div className="field-input specs-desc">
+                  <input
+                    type="text"
+                    name="Description"
+                    placeholder="Description"
+                    onChange={handleSpecsChange}
+                  ></input>
+                </div>
+                <button onClick={onAddProductSpecs}>
+                  <i class="bi bi-plus"></i>
+                </button>
+              </div>
             </div>
 
-            <div
-              className={
-                isMiniFormActive
-                  ? "miniform-close show-miniform-close"
-                  : "miniform-close"
-              }
-              onClick={closeMiniForm}
-            >
-              <i className="bi bi-arrow-left-short"></i>
-            </div>
-            <div className="miniform-content">
-              <div className="flex-row">
-                <div className="field-input flex-25">
-                  <p>Back</p>
-                  <input
-                    type="text"
-                    name="Back"
-                    onChange={(event) => handleAdvancedChange(event)}
-                    value={productSpecs && productSpecs.Back}
-                  ></input>
-                </div>
-                <div className="field-input flex-25">
-                  <p>Next</p>
-                  <input
-                    type="text"
-                    name="Next"
-                    onChange={(event) => handleAdvancedChange(event)}
-                    value={productSpecs && productSpecs.Next}
-                  ></input>
-                </div>
-                <div className="field-input flex-25">
-                  <p>Top</p>
-                  <input
-                    type="text"
-                    name="Top"
-                    onChange={(event) => handleAdvancedChange(event)}
-                    value={productSpecs && productSpecs.Top}
-                  ></input>
-                </div>
-                <div className="field-input flex-25">
-                  <p>EQ</p>
-                  <input
-                    type="text"
-                    name="EQ"
-                    onChange={(event) => handleAdvancedChange(event)}
-                    value={productSpecs && productSpecs.EQ}
-                  ></input>
-                </div>
-                <div className="field-input flex-25">
-                  <p>Material</p>
-                  <input
-                    type="text"
-                    name="Material"
-                    onChange={(event) => handleAdvancedChange(event)}
-                    value={productSpecs && productSpecs.Material}
-                  ></input>
-                </div>
-                <div className="field-input flex-25">
-                  <p>Condition</p>
-                  <input
-                    type="text"
-                    name="Condition"
-                    onChange={(event) => handleAdvancedChange(event)}
-                    value={productSpecs && productSpecs.Condition}
-                  ></input>
-                </div>
-                <div className="field-input flex-25">
-                  <p>String type</p>
-                  <input
-                    type="text"
-                    name="String_type"
-                    onChange={(event) => handleAdvancedChange(event)}
-                    value={productSpecs && productSpecs.String_type}
-                  ></input>
-                </div>
-                <div className="field-input flex-25">
-                  <p>Timbre</p>
-                  <input
-                    type="text"
-                    name="Timbre"
-                    onChange={(event) => handleAdvancedChange(event)}
-                    value={productSpecs && productSpecs.Timbre}
-                  ></input>
-                </div>
-              </div>
+            {/* Specs List HTML */}
+            <div className="miniform-list">
+              {productSpecs.map((ps) => {
+                return (
+                  <div className="specs-item">
+                    <span>{ps.Name}</span>
+                    <span>{ps.Description}</span>
+                    <span onClick={(event) => onDeleteProductSpecs(ps, event)}>
+                      <i class="bi bi-x-lg"></i>
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

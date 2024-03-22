@@ -215,7 +215,75 @@
             rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
         padding: 30px 40px;
         transition: 0.32s ease-in-out;
-        
+        .miniform-create {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            .miniform-flex-row {
+                gap: 4px;
+                display: flex;
+                width: 100%;
+            }
+            .field-input {
+                margin: 0;
+                display: flex;
+                justify-content: flex-end;
+                flex-grow: 1;
+                input {
+                    border: 1px solid black;
+                    height: 40px;
+                    padding: 0px 8px;
+                }
+
+                &.specs-name {
+                    flex-basis: 30%;
+                    max-width: 30%;
+                }
+            }
+
+            button {
+                width: 10%;
+                border: none;
+                cursor: pointer;
+                background-color: black;
+                color: white;
+                i {
+                    font-size: 24px;
+                }
+            }
+        }
+
+        .miniform-list {
+            display: flex;
+            flex-direction: column;
+            .specs-item {
+                display: flex;
+                gap: 4px;
+                padding: 16px 10px;
+                cursor: pointer;
+                &:hover {
+                    background-color: rgba(50, 50, 50, 0.458);
+                    color: white;
+                }
+            }
+            span:nth-child(1) {
+                flex-basis: 30%;
+                min-width: 30%;
+                max-width: 30%;
+                display: block;
+                border-right: 1px solid #3e3c3c6b;
+                display: flex;
+                align-items: center;
+                font-weight: 500;
+            }
+            span:nth-child(2) {
+
+                display: block;
+                text-align: right;
+            }
+        }
+
         & .miniform-close {
             width: 50px;
             height: 50px;
@@ -260,6 +328,8 @@
             h2 {
                 margin: 0;
             }
+
+            
         }
     }
 

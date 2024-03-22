@@ -5,6 +5,7 @@ import Modal from "../Modal/Modal";
 import P_CreateForm from "../../utils/ProductAction/P_CreateForm/P_CreateForm";
 import P_EditForm from "../../utils/ProductAction/P_EditForm/P_EditForm";
 import Loading from "../Loading/Loading.js";
+import ProductSpecsAPI from "../../apis/Product_specs/ProductSpecsAPI.js";
 
 const Product_M = () => {
   const [data, setData] = useState([]);
@@ -45,16 +46,23 @@ const Product_M = () => {
       window.confirm("Delete all product had selected ! Are you sure ?") ===
       true
     ) {
-      var result = await ProductAPI.delete(productSelected);
-      if (result) {
-        alert("Products had deleted !");
-        loadData();
-        const checkboxes = document.querySelectorAll(
-          'input[type="checkbox"]:checked'
-        );
-        checkboxes.forEach((checkbox) => {
-          checkbox.checked = false;
-        });
+      var Delete_ProductSpecs_Result =
+        await ProductSpecsAPI.deleteWithProductId(productSelected);
+      if (Delete_ProductSpecs_Result.success) {
+        var result = await ProductAPI.delete(productSelected);
+        if (result) {
+          alert("Products had deleted !");
+          loadData();
+          const checkboxes = document.querySelectorAll(
+            'input[type="checkbox"]:checked'
+          );
+          checkboxes.forEach((checkbox) => {
+            checkbox.checked = false;
+          });
+        }
+      }
+      else {
+        alert("Products delete failed !");
       }
     }
   };
@@ -102,7 +110,7 @@ const Product_M = () => {
       }
       setTimeout(() => {
         setIsLoading(false);
-      },500)
+      }, 500);
     });
   };
 

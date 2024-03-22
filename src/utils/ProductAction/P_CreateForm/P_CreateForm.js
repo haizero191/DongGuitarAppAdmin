@@ -7,11 +7,12 @@ import BrandAPI from "../../../apis/Brand/BrandAPI";
 import Loading from "../../../component/Loading/Loading";
 import CategoryAPI from "../../../apis/Category/CategoryAPI";
 import ImageAPI from "../../../apis/Image/ImageAPI";
-import ProductSpecsAPI from "../../../apis/Product_specs/ProductSpecsAPI";
+
 import AuthAPI from "../../../apis/Auth/AuthAPI";
 
 const P_CreateForm = ({ onFinish, active }) => {
   const { quill, quillRef } = useQuill();
+
   const [product, setProduct] = useState({});
   const [brandList, setBrandList] = useState([]);
   const [cateList, setCateList] = useState([]);
@@ -21,17 +22,12 @@ const P_CreateForm = ({ onFinish, active }) => {
   const [productFiles, setProductFiles] = useState([null, null, null, null]);
   const [productVideo, setProductVideo] = useState([]);
   const [isMiniFormActive, setIsMiniFormActive] = useState(false);
-  const [productSpecs, setProductSpecs] = useState({});
 
   useEffect(() => {
     if (quill) {
       quill.on("text-change", (delta, oldDelta, source) => {
         var htmlEncoded = htmlEncode(quill.root.innerHTML.toString());
         setEditorContent(htmlEncoded);
-        // console.log(quill.root.innerHTML); // Get innerHTML using quill
-        // console.log(quill.getText()); // Get text only
-        // console.log(quill.getContents()); // Get delta contents
-        // console.log(quillRef.current.firstChild.innerHTML); // Get innerHTML using quillRef
       });
       console.log("active form", active);
     }
@@ -81,19 +77,18 @@ const P_CreateForm = ({ onFinish, active }) => {
   const onSave = async () => {
     var newProduct = product;
     newProduct = { ...newProduct, ["Description"]: editorContent };
-    
+
     if (dataChecker(newProduct)) {
       //-------------------------- HANDLE CREATE A NEW PRODUCT -------------------------------
 
       try {
         setIsLoading(true);
-        var [C_Product_Result, C_Image_Result, C_ProductSpecs_Result] = await Promise.all([
+        var [C_Product_Result, C_Image_Result] = await Promise.all([
           ProductAPI.create(newProduct), // Tạo sản phẩm trong database
           ImageAPI.upload(productFiles), // Upload hình ảnh lên google driver
-          ProductSpecsAPI.create(productSpecs)
         ]);
         // Xử lí Promise result ----------------------------------------------
-        if (C_Product_Result.success && C_Image_Result.success && C_ProductSpecs_Result.success) {
+        if (C_Product_Result.success && C_Image_Result.success) {
           // Tạo document Image trong database --------------------------------
           var Upload_Image_Result = await Promise.all(
             C_Image_Result.data.map(async (item) => {
@@ -101,7 +96,6 @@ const P_CreateForm = ({ onFinish, active }) => {
               return result;
             })
           );
-
 
           console.log("Image Uploading....");
           // Xử lí kết quả tạo document Image ---------------------------------
@@ -111,7 +105,6 @@ const P_CreateForm = ({ onFinish, active }) => {
             var imageList = Upload_Image_Result.map((res) => res.data._id);
             var updateResult = await ProductAPI.update(productCreated._id, {
               Images: imageList,
-              Product_specs: C_ProductSpecs_Result.data._id
             });
             console.log("Product Updating....");
             // Xử lí kết quả update sản phẩm theo hình ảnh
@@ -130,20 +123,16 @@ const P_CreateForm = ({ onFinish, active }) => {
           }
         } else {
           alert("Product create failed !");
-          console.log(C_Product_Result, C_Image_Result, C_ProductSpecs_Result)
         }
       } catch (error) {
         console.log("Have error: ", error);
         return;
       }
-
       //--------------------------------------------------------------------------------------
-
     } else {
       alert("Vui lòng điền đầy đủ thông tin để tạo sản phẩm mới");
     }
   };
-
 
   // Kiểm tra form
   const dataChecker = (data) => {
@@ -208,21 +197,19 @@ const P_CreateForm = ({ onFinish, active }) => {
   const onCateSelected = async (event) => {
     var cateEL = document.getElementsByName("Category");
     cateEL[0].value = event.target.getAttribute("data-name");
-
-
-    var Get_Category_Result = await CategoryAPI.detail(event.target.getAttribute("data-value"))
-    console.log(Get_Category_Result)
-    if(Get_Category_Result.success) {
-      setSubCateList(Get_Category_Result.data.SubCategory)
+    var Get_Category_Result = await CategoryAPI.detail(
+      event.target.getAttribute("data-value")
+    );
+    if (Get_Category_Result.success) {
+      setSubCateList(Get_Category_Result.data.SubCategory);
     }
-
-
     setProduct({
       ...product,
       ["Category"]: event.target.getAttribute("data-value"),
     });
   };
 
+  // Handle image uploade
   const onUpload = (index, event) => {
     var fileTypeUpload = event.currentTarget.getAttribute("data-name");
     if (fileTypeUpload === "image-upload-element") {
@@ -231,7 +218,6 @@ const P_CreateForm = ({ onFinish, active }) => {
       inputUpload.addEventListener("change", (event) => {
         var files = inputUpload.files;
         if (files && files[0]) {
-          console.log(URL.createObjectURL(event.target.files[0]));
           var fileList = productFiles;
           fileList[index] = files[0];
           setProductFiles([...fileList]);
@@ -258,24 +244,10 @@ const P_CreateForm = ({ onFinish, active }) => {
     setIsMiniFormActive((isMiniFormActive) => !isMiniFormActive);
   };
 
+  // Handle miniform close
   const closeMiniForm = () => {
     setIsMiniFormActive(false);
   };
-
-  const handleAdvancedChange = (event) => {
-    setProductSpecs({
-      ...productSpecs,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  /** Task for MINIFORM
-   *    > Setup action for miniform            (Finish)
-   *    > Close
-   *    > Open
-   *    > Close when form close / finished
-   *    > Save miniform
-   */
 
   return (
     <div className="P_CreateForm">
@@ -398,25 +370,26 @@ const P_CreateForm = ({ onFinish, active }) => {
                 <div className="drop-menu">
                   <p>Category list</p>
                   <ul>
-                    {subCateList && subCateList.map((subCate) => {
-                      return (
-                        <li
-                          key={"np-create-subcategory-selected" + subCate._id}
-                          onClick={onSubCateSelected}
-                          data-name={subCate.Name}
-                          data-value={subCate._id}
-                        >
-                          {subCate.Name}
-                        </li>
-                      );
-                    })}
+                    {subCateList &&
+                      subCateList.map((subCate) => {
+                        return (
+                          <li
+                            key={"np-create-subcategory-selected" + subCate._id}
+                            onClick={onSubCateSelected}
+                            data-name={subCate.Name}
+                            data-value={subCate._id}
+                          >
+                            {subCate.Name}
+                          </li>
+                        );
+                      })}
                   </ul>
                 </div>
               </div>
             </div>
 
             <div className="flex-row">
-            <div className="field-input flex-40">
+              <div className="field-input flex-40">
                 <p>Purchase price</p>
                 <input
                   type="number"
@@ -455,9 +428,7 @@ const P_CreateForm = ({ onFinish, active }) => {
           <div className="btn-final">
             <button onClick={onCancel}>Cancel</button>
             <button onClick={onSave}>
-              {
-                !isLoading ? <p>Save</p> : <></>
-              }
+              {!isLoading ? <p>Save</p> : <></>}
 
               <Loading isLoading={isLoading}></Loading>
             </button>
@@ -465,108 +436,7 @@ const P_CreateForm = ({ onFinish, active }) => {
         </div>
       </div>
 
-      {!active ? (
-        <></>
-      ) : (
-        <div>
-          <div
-            className={
-              isMiniFormActive ? "specs-btn show-specs-btn" : "specs-btn"
-            }
-            onClick={openMiniForm}
-          >
-            <span>Advanced</span>
-          </div>
-          <div
-            className={
-              isMiniFormActive ? "miniform miniform-active" : "miniform"
-            }
-          >
-            <div className="miniform-header">
-              <h2>Feature </h2>
-            </div>
-
-            <div
-              className={
-                isMiniFormActive
-                  ? "miniform-close show-miniform-close"
-                  : "miniform-close"
-              }
-              onClick={closeMiniForm}
-            >
-              <i class="bi bi-arrow-left-short"></i>
-            </div>
-            <div className="miniform-content">
-              <div className="flex-row">
-                <div className="field-input flex-25">
-                  <p>Back</p>
-                  <input
-                    type="text"
-                    name="Back"
-                    onChange={(event) => handleAdvancedChange(event)}
-                  ></input>
-                </div>
-                <div className="field-input flex-25">
-                  <p>Next</p>
-                  <input
-                    type="text"
-                    name="Next"
-                    onChange={(event) => handleAdvancedChange(event)}
-                  ></input>
-                </div>
-                <div className="field-input flex-25">
-                  <p>Top</p>
-                  <input
-                    type="text"
-                    name="Top"
-                    onChange={(event) => handleAdvancedChange(event)}
-                  ></input>
-                </div>
-                <div className="field-input flex-25">
-                  <p>EQ</p>
-                  <input
-                    type="text"
-                    name="EQ"
-                    onChange={(event) => handleAdvancedChange(event)}
-                  ></input>
-                </div>
-                <div className="field-input flex-25">
-                  <p>Material</p>
-                  <input
-                    type="text"
-                    name="Material"
-                    onChange={(event) => handleAdvancedChange(event)}
-                  ></input>
-                </div>
-                <div className="field-input flex-25">
-                  <p>Condition</p>
-                  <input
-                    type="text"
-                    name="Condition"
-                    onChange={(event) => handleAdvancedChange(event)}
-                  ></input>
-                </div>
-                <div className="field-input flex-25">
-                  <p>String type</p>
-                  <input
-                    type="text"
-                    name="String_type"
-                    onChange={(event) => handleAdvancedChange(event)}
-                  ></input>
-                </div>
-                <div className="field-input flex-25">
-                  <p>Timbre</p>
-                  <input
-                    type="text"
-                    name="Timbre"
-                    onChange={(event) => handleAdvancedChange(event)}
-                  ></input>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      
     </div>
   );
 };
