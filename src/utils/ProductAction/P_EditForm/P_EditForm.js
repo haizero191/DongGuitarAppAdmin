@@ -13,7 +13,7 @@ import DriverAPI from "../../../apis/Driver/DriverAPI";
 import SpecsAPI from "../../../apis/Specs/SpecsAPI";
 
 const P_EditForm = ({ onFinish, active, data }) => {
-  const [productFiles, setProductFiles] = useState([null, null, null, null]);
+  const [productFiles, setProductFiles] = useState([null, null, null, null, null, null]);
   const [brandList, setBrandList] = useState([]);
   const [cateList, setCateList] = useState([]);
   const [subCateList, setSubCateList] = useState([]);
@@ -266,11 +266,7 @@ const P_EditForm = ({ onFinish, active, data }) => {
 
   // Handle delete Products Specs
   const onDeleteProductSpecs = async (productSpecs, event) => {
-
-    console.log(productSpecs._id)
-
     const Delete_ProductSpecs_Result = await ProductSpecsAPI.delete([productSpecs._id]);
-    console.log(Delete_ProductSpecs_Result)
     if (Delete_ProductSpecs_Result.success) {
       getProductSpecs(product._id);
     }
@@ -342,7 +338,7 @@ const P_EditForm = ({ onFinish, active, data }) => {
               </div>
               <div className="field-input flex-40">
                 <div className="flex-row">
-                  {Array.from({ length: 4 }).map((file, index) => {
+                  {Array.from({ length: 6 }).map((file, index) => {
                     return (
                       <div
                         className="field-input flex-50"

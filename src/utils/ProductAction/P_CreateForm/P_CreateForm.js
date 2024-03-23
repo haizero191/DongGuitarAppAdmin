@@ -19,7 +19,7 @@ const P_CreateForm = ({ onFinish, active }) => {
   const [subCateList, setSubCateList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [editorContent, setEditorContent] = useState("");
-  const [productFiles, setProductFiles] = useState([null, null, null, null]);
+  const [productFiles, setProductFiles] = useState([null, null, null, null, null, null]);
   const [productVideo, setProductVideo] = useState([]);
   const [isMiniFormActive, setIsMiniFormActive] = useState(false);
 
@@ -435,8 +435,6 @@ const P_CreateForm = ({ onFinish, active }) => {
           </div>
         </div>
       </div>
-
-      
     </div>
   );
 };
