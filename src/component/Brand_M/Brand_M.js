@@ -14,6 +14,8 @@ const Brand_M = ({ onLoad, isLoading }) => {
   const [brandSelected, setBrandSelected] = useState([]);
   const [amountProductList, setAmountProductList] = useState([]);
 
+
+  // Action for Brand Management
   const onDelete = async () => {
     if (brandSelected.length === 0)
       alert("Please select category to delete !!!");
@@ -69,6 +71,7 @@ const Brand_M = ({ onLoad, isLoading }) => {
     }
   };
 
+  // Get amount product of brand
   const getAmountProductOfBrand = async (category) => {
     const pAmount = await ProductAPI.getAmount("brand", category._id);
     return pAmount;

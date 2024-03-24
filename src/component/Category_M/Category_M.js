@@ -17,7 +17,6 @@ const Category_M = ({ onLoad, isLoading }) => {
   const [cateSelected, setCateSelected] = useState([]);
   const [amountProductList, setAmountProductList] = useState([]);
 
-
   // Handle actions for category management
   const onDelete = async () => {
     if (cateSelected.length === 0)
@@ -27,20 +26,21 @@ const Category_M = ({ onLoad, isLoading }) => {
         window.confirm("Delete all category had selected ! Are you sure ?") ==
         true
       ) {
+        var cateSelectedDelete = categoryList.filter(
+          (cate) => cate._id === cateSelected[0]
+        );
+        var subCateIds = cateSelectedDelete[0].SubCategory.map((sc) => sc._id);
+        var Delete_All_SubCategory_Result = await SubCategoryAPI.delete(
+          subCateIds
+        );
 
-        var cateSelectedDelete = categoryList.filter(cate => cate._id === cateSelected[0])
-        var subCateIds = cateSelectedDelete[0].SubCategory.map(sc => sc._id)
-        var Delete_All_SubCategory_Result = await SubCategoryAPI.delete(subCateIds)
-
-        
-        if(Delete_All_SubCategory_Result.success) {
+        if (Delete_All_SubCategory_Result.success) {
           var response = await CategoryAPI.delete(cateSelected);
           if (response.success) {
             alert("Categories had deleted !");
             loadData();
           }
         }
-      
       } else {
       }
     }
@@ -65,7 +65,6 @@ const Category_M = ({ onLoad, isLoading }) => {
     switch (data.status) {
       case "close":
         setIsModalActive(false);
-        loadData();
         break;
       default:
         break;
@@ -78,28 +77,8 @@ const Category_M = ({ onLoad, isLoading }) => {
     return pAmount;
   };
 
-  // Load dữ liệu
-  const loadData = async () => {
-    const Get_Category_Result = await CategoryAPI.get();
-    if (Get_Category_Result.success) {
-      const Get_Product_Amount_Result = await Promise.all(
-        Get_Category_Result.data.map((category) => {
-          return getAmountProductOfCategory(category);
-        })
-      );
-
-      onLoad({
-        name: "category",
-        isLoaded: true,
-      });
-      setAmountProductList(Get_Product_Amount_Result.map((item) => item.data));
-      setCategoryList(Get_Category_Result.data);
-    }
-  };
-
   // Xử lý sự kiện từ form
   const handleFormEvent = (data) => {
-    loadData();
     if (data.status === "FORM_FINISHED") {
       setIsModalActive(false);
       loadData();
@@ -133,13 +112,30 @@ const Category_M = ({ onLoad, isLoading }) => {
     }
   };
 
+  const loadData = async () => {
+    const Get_Category_Result = await CategoryAPI.get();
+    if (Get_Category_Result.success) {
+      onLoad({
+        name: "category",
+        isLoaded: true,
+      });
+      const Get_Product_Amount_Result = await Promise.all(
+        Get_Category_Result.data.map((category) => {
+          return getAmountProductOfCategory(category);
+        })
+      );
+      setAmountProductList(
+        Get_Product_Amount_Result.map((item) => item.data)
+      );
+      setCategoryList(Get_Category_Result.data);
+    }
+  };
+
   useEffect(() => {
     loadData();
   }, []);
 
-  return isLoading ? (
-    <></>
-  ) : (
+  return (
     <div className="Category_M">
       <div className="CM-header">
         <div className="title">Danh mục</div>

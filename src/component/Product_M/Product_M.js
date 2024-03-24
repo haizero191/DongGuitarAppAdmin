@@ -24,7 +24,7 @@ const Product_M = () => {
     return formatter.format(amount);
   };
 
-  // Tạo sản phẩm mới
+  // Action for product management
   const onCreate = () => {
     setIsModalActive(true);
     setModalAction("P_CREATE");

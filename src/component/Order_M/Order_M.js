@@ -8,7 +8,6 @@ import O_ConfirmForm from "../../utils/OrderAction/O_ConfirmForm/O_ConfirmForm";
 import moment from "moment";
 
 const Order_M = ({ onLoad }) => {
-  const [data, setData] = useState([]);
   const [isModalActive, setIsModalActive] = useState(false);
   const [modalAction, setModalAction] = useState("");
   const [modalTitle, setModalTitle] = useState("");
@@ -17,10 +16,8 @@ const Order_M = ({ onLoad }) => {
     name: "Đơn hàng mới",
   });
   const [orderList, setOrderList] = useState([]);
-
   const [isLoading, setIsLoading] = useState(false);
   const [orderSelected, setOrderSelected] = useState({});
-  const [searchType, setSearchType] = useState("name");
   const [isSearch, setIsSearch] = useState(false);
 
   // Variables for filter
@@ -74,6 +71,9 @@ const Order_M = ({ onLoad }) => {
     },
   ];
 
+
+
+
   useEffect(() => {
     loadData();
   }, [orderStatusSelect]);
@@ -100,6 +100,8 @@ const Order_M = ({ onLoad }) => {
     getTotalOrderWithReview(orderList);
   };
 
+
+  // Update review for order
   const updateReviewOrder = async (order) => {
     var updateOrder = order;
     updateOrder.IsReview = true;
@@ -223,6 +225,8 @@ const Order_M = ({ onLoad }) => {
   const onSearchChange = (event) => {
     setFilter({ ...filter, search: event.target.value });
   };
+
+  
 
   return (
     <div className="Order_M">

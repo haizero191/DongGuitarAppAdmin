@@ -22,8 +22,6 @@ const Tags_M = () => {
     },
   ]);
 
-
-
   useEffect(() => {
     var isLoadingAll = dataLoadedList.filter(dataLoaded => {return dataLoaded.isLoaded === false})
     if(isLoadingAll.length > 0) {
@@ -36,10 +34,8 @@ const Tags_M = () => {
     }
   });
 
-  useEffect(() => {
 
-  }, []);
-
+  // Listen data loaded
   const onFormDataLoaded = (data) => {
     switch (data.name) {
       case "category":
@@ -75,14 +71,14 @@ const Tags_M = () => {
       }
       <div className="TM-left">
         <div className="Category-M">
-          <Category_M onLoad={onFormDataLoaded} isLoading={isLoading}/>
+          <Category_M onLoad={onFormDataLoaded} />
         </div>
         <div className="Brand-M">
-          <Brand_M onLoad={onFormDataLoaded} isLoading={isLoading}/>
+          <Brand_M onLoad={onFormDataLoaded} />
         </div>
       </div>
       <div className="TM-right">
-        <Featured_M onLoad={onFormDataLoaded} isLoading={isLoading}/>
+        <Featured_M onLoad={onFormDataLoaded} />
       </div>
     </div>
   );

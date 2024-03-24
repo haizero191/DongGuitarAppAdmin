@@ -48,7 +48,7 @@ const AppRoutes = () => {
       <Route element={<PrivateRoute />}>
         <Route path="dashboard" element={<Dashboard />}>
           <Route path="home-setting" element={<Home_S />} />
-          <Route path="order-management" element={<Order_M />} />
+          {/* <Route path="order-management" element={<Order_M />} /> */}
           <Route path="product-management" element={<Product_M />} />
           <Route path="tags-management" element={<Tags_M />} />
         </Route>

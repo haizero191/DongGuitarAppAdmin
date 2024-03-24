@@ -46,7 +46,6 @@ class CategoryAPI {
     return result.data;
   }
 
-
   async detail(id) {
     var result = await axios.get(process.env.REACT_APP_API_URL + "/api/categories/detail/" + id);
     return result.data;
