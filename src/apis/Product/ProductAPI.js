@@ -2,9 +2,16 @@ import axios from "axios";
 
 class ProductAPI {
  
-  async get() {
-    var result = await axios.get(process.env.REACT_APP_API_URL + "/api/products");
-    return result.data;
+  async get(args) {
+    const { page, limit, filter } = args; // Destructure tham số từ args
+    const response = await axios.get(process.env.REACT_APP_API_URL + `/api/products`, {
+        params: {
+            page: page,
+            limit: limit,
+            filter: filter
+        }
+    })
+    return response.data;
   }
 
   async create(product) {
@@ -44,7 +51,6 @@ class ProductAPI {
       },
       data: dataUpdate,
     });
-
     return result.data;
   }
 

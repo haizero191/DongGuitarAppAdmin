@@ -45,20 +45,20 @@ const Tags_M = () => {
           );
         }
         break;
-      case "brand":
-        if (data.isLoaded) {
-           setDataLoadedList(dataLoaded => 
-            dataLoaded.map((obj) => (obj.name === data.name ? { ...obj, isLoaded: data.isLoaded } : obj))
-          );
-        }
-        break;
-      case "product-feature":
-        if (data.isLoaded) {
-           setDataLoadedList(dataLoaded => 
-            dataLoaded.map((obj) => (obj.name === data.name ? { ...obj, isLoaded: data.isLoaded } : obj))
-          );
-        }
-        break;
+      // case "brand":
+      //   if (data.isLoaded) {
+      //      setDataLoadedList(dataLoaded => 
+      //       dataLoaded.map((obj) => (obj.name === data.name ? { ...obj, isLoaded: data.isLoaded } : obj))
+      //     );
+      //   }
+      //   break;
+      // case "product-feature":
+      //   if (data.isLoaded) {
+      //      setDataLoadedList(dataLoaded => 
+      //       dataLoaded.map((obj) => (obj.name === data.name ? { ...obj, isLoaded: data.isLoaded } : obj))
+      //     );
+      //   }
+      //   break;
       default:
         break;
     }
@@ -66,19 +66,19 @@ const Tags_M = () => {
 
   return (
     <div className="Tags_M">
-      {
+      {/* {
         isLoading ? <div className="loading-bg"><Loading isLoading={isLoading} /></div> : <></>
-      }
+      } */}
       <div className="TM-left">
         <div className="Category-M">
           <Category_M onLoad={onFormDataLoaded} />
         </div>
-        <div className="Brand-M">
+        {/* <div className="Brand-M">
           <Brand_M onLoad={onFormDataLoaded} />
-        </div>
+        </div> */}
       </div>
       <div className="TM-right">
-        <Featured_M onLoad={onFormDataLoaded} />
+        {/* <Featured_M onLoad={onFormDataLoaded} /> */}
       </div>
     </div>
   );

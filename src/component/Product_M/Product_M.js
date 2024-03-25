@@ -14,6 +14,8 @@ const Product_M = () => {
   const [modalTitle, setModalTitle] = useState("");
   const [productSelected, setProductSelected] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [navigateData, setNavigateData] = useState(null)
+  const [page, setPage] = useState(1)
 
   // Chuyển đổi sang định dạng VND
   const formatCurrency = (amount) => {
@@ -60,8 +62,7 @@ const Product_M = () => {
             checkbox.checked = false;
           });
         }
-      }
-      else {
+      } else {
         alert("Products delete failed !");
       }
     }
@@ -104,9 +105,15 @@ const Product_M = () => {
   // Load dữ liệu sản phẩm
   const loadData = () => {
     setIsLoading(true);
-    ProductAPI.get().then((result) => {
+    ProductAPI.get({
+      page: page,
+      limit: 7,
+      filter: null
+    }).then((result) => {
       if (result.success) {
+        setNavigateData(result.navigate)
         setData(result.data);
+        console.log(result.navigate)
       }
       setTimeout(() => {
         setIsLoading(false);
@@ -125,6 +132,15 @@ const Product_M = () => {
     }
   };
 
+  // Handle Navigate 
+  const onNavigate = (page, event) => {
+    setPage(page);
+  }
+
+
+  useEffect(() => {
+    loadData();
+  }, [page])
   useEffect(() => {
     loadData();
   }, []);
@@ -194,6 +210,32 @@ const Product_M = () => {
                   </>
                 )}
               </div>
+            </div>
+          </div>
+          {/* product navigation */}
+          <div className="navigation-container">
+            <div className="navigation">
+              {navigateData ? (
+                Array.from({
+                  length: navigateData.totalPage,
+                }).map((item, index) => {
+                  return (
+                    <div
+                      key={"product-render" + index}
+                      className={
+                        index + 1 === page
+                          ? "navigation-number navigate-active"
+                          : "navigation-number"
+                      }
+                      onClick={(event) => onNavigate(index + 1, event)}
+                    >
+                      {index + 1}
+                    </div>
+                  );
+                })
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </div>
