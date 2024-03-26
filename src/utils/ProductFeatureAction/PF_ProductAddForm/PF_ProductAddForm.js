@@ -8,14 +8,22 @@ const PF_ProductAddForm = ({ onFinish, active, data }) => {
   const [productList, setProductList] = useState([]);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [productSelected, setProductSelected] = useState([]);
+  const [productLastSelected, setProductLastSelected] = useState([]);
+  const [navigateData, setNavigateData] = useState(null);
+  const [page, setPage] = useState(1);
 
   const loadData = async () => {
-    var Get_Product_Result = await ProductAPI.get();
+    var Get_Product_Result = await ProductAPI.get({
+      page: page,
+      limit: 5,
+      filter: null,
+    });
+
     if (Get_Product_Result.success) {
-      var newData = Get_Product_Result.data.filter((product) => {
-        return !data.products.find((p) => p._id === product._id);
-      });
-      setProductList(newData);
+
+      setProductLastSelected(data.products);
+      setNavigateData(Get_Product_Result.navigate);
+      setProductList(Get_Product_Result.data);
     }
   };
 
@@ -29,7 +37,7 @@ const PF_ProductAddForm = ({ onFinish, active, data }) => {
   };
 
   const onSave = async () => {
-    setIsLoadingButton(true)
+    setIsLoadingButton(true);
     var Create_ProductFeature_Result_Map = await Promise.all([
       productSelected.map((product) => {
         return ProductFeatureAPI.create({
@@ -39,46 +47,47 @@ const PF_ProductAddForm = ({ onFinish, active, data }) => {
       }),
     ]);
 
-    var response = await Promise.all(Create_ProductFeature_Result_Map[0].map(promise => {
-      return promise
-    }))
+    var response = await Promise.all(
+      Create_ProductFeature_Result_Map[0].map((promise) => {
+        return promise;
+      })
+    );
 
-    var checkResponse = response.map(result => result.success )
-    const hasFalse = checkResponse.some(element => !element);
+    var checkResponse = response.map((result) => result.success);
+    const hasFalse = checkResponse.some((element) => !element);
 
-
-    if(!hasFalse) {
+    if (!hasFalse) {
       onFinish({
         status: "FORM_FINISHED",
       });
-      setIsLoadingButton(false)
-    }
-    else {
-      setIsLoadingButton(false)
-      alert("Thêm sản phẩm thất bại")
+      setIsLoadingButton(false);
+      setProductSelected([]);
+    } else {
+      setIsLoadingButton(false);
+      alert("Thêm sản phẩm thất bại");
     }
   };
 
   const onProductSelect = (product, event) => {
     var pSelected = productSelected;
-    var pExist = pSelected.find((item) => item._id === product._id);
-    var pElement = event.currentTarget;
-
-    if (pExist) {
-      pSelected = pSelected.filter((p) => p._id !== pExist._id);
-      pElement.classList.remove("p-active");
-      setProductSelected(pSelected);
-    } else {
-      pElement.classList.add("p-active");
-      pSelected.push(product);
-      setProductSelected(pSelected);
-    }
+    var pLastExist = productLastSelected.find((item) => item._id === product._id);
+    if (!pLastExist) {
+      var pExist = productSelected.find((item) => item._id === product._id);
+      if(!pExist) {
+        pSelected.push(product);
+        setProductSelected([...pSelected]);
+      }
+      else {
+        var newProductSelected = productSelected.filter(ps => ps._id !== product._id)
+        setProductSelected([...newProductSelected]);
+      }
+    } 
   };
 
   const dataReset = () => {
-    setProductList([])
-    setProductSelected([])
-  }
+    setProductList([]);
+    setProductSelected([]);
+  };
 
   // cancel form create
   const onCancel = () => {
@@ -87,6 +96,26 @@ const PF_ProductAddForm = ({ onFinish, active, data }) => {
     });
     dataReset();
   };
+
+  const onNavigate = (page, event) => {
+    setPage(page);
+  };
+
+  const checkLastAndMarker = (pId) => {
+    var isExistProduct = productLastSelected.filter((ps) => ps._id === pId);
+    if (isExistProduct.length > 0) return true;
+    else return false;
+  };
+
+  const checkAndMarker = (pId) => {
+    var isExistProduct = productSelected.filter((ps) => ps._id === pId);
+    if (isExistProduct.length > 0) return true;
+    else return false;
+  };
+
+  useEffect(() => {
+    loadData();
+  }, [page]);
 
   useEffect(() => {
     if (active) loadData();
@@ -113,7 +142,15 @@ const PF_ProductAddForm = ({ onFinish, active, data }) => {
                     {productList.map((item) => {
                       return (
                         <div
-                          className={"P-item "}
+                          className={
+                            "P-item " +
+                            (checkLastAndMarker(item._id)
+                              ? "p-last-active "
+                              : " ") +
+                            (checkAndMarker(item._id)
+                              ? "p-active"
+                              : "")
+                          }
                           key={"Product-render-modal-" + item._id}
                           onClick={(event) => onProductSelect(item, event)}
                         >
@@ -135,6 +172,32 @@ const PF_ProductAddForm = ({ onFinish, active, data }) => {
                     })}
                   </>
                 )}
+              </div>
+              {/* product navigation */}
+              <div className="navigation-container">
+                <div className="navigation">
+                  {navigateData ? (
+                    Array.from({
+                      length: navigateData.totalPage,
+                    }).map((item, index) => {
+                      return (
+                        <div
+                          key={"product-render" + index}
+                          className={
+                            index + 1 === page
+                              ? "navigation-number navigate-active"
+                              : "navigation-number"
+                          }
+                          onClick={(event) => onNavigate(index + 1, event)}
+                        >
+                          {index + 1}
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
             </div>
           </div>
